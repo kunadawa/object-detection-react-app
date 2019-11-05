@@ -9,10 +9,10 @@ import EventList from './EventList'
 
 Enzyme.configure({adapter: new Adapter()});
 
-describe ("creating <EventList/>", () => {
+describe ("<EventList/>", () => {
     it("should render info msg when there are no events", () => {
         const list = shallow(<EventList />);
-        list.find('div.span').should.equal(1)
+        list.find('div span').should.have.length(1)
         list.text().should.equal("No events available")
     })
 })
