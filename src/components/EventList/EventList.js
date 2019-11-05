@@ -5,7 +5,9 @@ function EventList(props) {
         <div>
             {
                 props.events && props.events.length > 0
-                ? <ol></ol>
+                ? <ol>
+                        {props.events.map(event => <li key={event}>event</li>)}
+                  </ol>
                 :  <span>No events available</span>
             }
         </div>
