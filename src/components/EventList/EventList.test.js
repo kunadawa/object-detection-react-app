@@ -14,5 +14,10 @@ describe ("<EventList/>", () => {
         const list = shallow(<EventList />);
         list.find('div span').should.have.length(1)
         list.text().should.equal("No events available")
+    });
+
+     it("should render list items when event list is supplied", () => {
+        const list = shallow(<EventList events={["one", "two", "three"]}/>);
+        list.find('div ol li').should.have.length(3)
     })
 })
