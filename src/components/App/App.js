@@ -21,9 +21,8 @@ class App extends Component {
   }
 
   stream_callback = (event) => {
-    console.log(event)
     this.setState(oldState => ({
-      events: oldState.events.concat(event)
+      events: oldState.events.concat(JSON.parse(event.data))
     }))
   }
 }
