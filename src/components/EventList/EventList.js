@@ -3,6 +3,7 @@ import React from 'react'
 function EventList(props) {
     return (
         <div>
+            <h3>Events ({props.events? props.events.length: 0})</h3>
             {
                 props.events && props.events.length > 0
                 ? <ol>
