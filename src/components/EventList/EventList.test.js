@@ -13,7 +13,7 @@ describe ("<EventList/>", () => {
     it("should render info msg when there are no events", () => {
         const list = shallow(<EventList />);
         list.find('div span').should.have.length(1)
-        list.text().endsWith("No events available").should.be.true
+        list.text().endsWith("No events available").should.be.true()
     });
 
      it("should render list items when event list is supplied", () => {
