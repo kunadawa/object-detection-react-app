@@ -17,15 +17,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-        register_stream_callback(this.stream_callback)
-    }
+      register_stream_callback(this.stream_callback)
+  }
 
-    stream_callback = (event) => {
-      console.log(event)
-      this.setState(oldState => ({
-        events: oldState.events.concat(event)
-      }))
-    }
+  stream_callback = (event) => {
+    console.log(event)
+    this.setState(oldState => ({
+      events: oldState.events.concat(event)
+    }))
+  }
 }
 
 export default App;
