@@ -17,7 +17,8 @@ describe ("<EventList/>", () => {
     });
 
      it("should render list items when event list is supplied", () => {
-        const list = shallow(<EventList events={["one", "two", "three"]}/>);
+        const list = shallow(
+            <EventList events={[{stringMap: {id:'1'}, source:'test'}, {stringMap: {id:'2'}, source:'test'}, {stringMap: {id:'3'}, source:'test'}]}/>);
         list.find('div ol li').should.have.length(3)
     })
 })

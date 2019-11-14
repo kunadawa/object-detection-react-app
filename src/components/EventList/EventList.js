@@ -7,7 +7,7 @@ function EventList(props) {
             {
                 props.events && props.events.length > 0
                 ? <ol>
-                        {props.events.map(event => <li key={event.frameCount}>{`${event.instanceName} - ${event.source}`}</li>)}
+                        {props.events.map(event => <li key={event.stringMap.id}>{`${event.instanceName} - ${event.source} : ${JSON.stringify(event)}`}</li>)}
                   </ol>
                 :  <span>No events available</span>
             }
