@@ -5,7 +5,10 @@ import EventList from "../EventList/EventList";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {events:[]}
+    this.state = {
+        events:[],
+        streamStatus:{}
+    }
   }
 
   render() {
@@ -28,12 +31,31 @@ class App extends Component {
 
     /**
      * update the state with event source
-     * @param oldState
+     * @param oldState - the old state
+     * @param eventSource - an instance of EventSource (standard API)
      */
   setEventSource = (oldState, eventSource) => {
       return {
           ...oldState,
           eventSource
+      };
+  }
+
+    /**
+     * update oldState to reflect the current frame count for each instance-source combination
+     * @param oldState - the old state
+     * @param eventData - event data from a server sent event
+     */
+  updateStreamStatus = (oldState, eventData) => {
+    return {
+          ...oldState,
+          streamStatus: {
+            ...oldState.streamStatus,
+            [eventData.instanceName]: {
+                ...oldState.streamStatus[eventData.instanceName],
+                [eventData.source]: eventData.frameCount
+            }
+          }
       };
   }
 
@@ -46,7 +68,8 @@ class App extends Component {
       data.frame = 'work/in/progress'
       this.setState(oldState => ({
         events: oldState.events.concat(data)
-      }))
+      }));
+      this.setState(oldState => this.updateStreamStatus(oldState, data));
   }
 }
 
