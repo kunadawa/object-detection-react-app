@@ -21,6 +21,8 @@ class App extends Component {
       if (typeof (EventSource) !== "undefined") {
           const eventSource = register_stream_callback(this.stream_callback)
           this.setState(oldState => this.setEventSource(oldState, eventSource))
+      } else {
+          console.log("componentDidMount() - event source is not supported, therefore no callbacks registered")
       }
   }
 
