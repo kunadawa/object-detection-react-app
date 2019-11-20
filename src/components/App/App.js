@@ -52,7 +52,6 @@ class App extends Component {
       //  and store the frame count, then add them to the HTTP event source URL (will I need to deregister the earlier URI)
       // might have to return the event listener and store a ref here?
       console.log(data)
-      data.frame = 'work/in/progress'
       this.setState(oldState => ({
         events: oldState.events.concat(data)
       }));
