@@ -6,8 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        events:[],
-        streamStatus:{}
+        events:{},
     }
   }
 
@@ -29,18 +28,27 @@ class App extends Component {
   }
 
     /**
-     * update oldState to reflect the current frame count for each instance-source combination
+     * add an event to  state, to a unique list for each instance-source combination
      * @param oldState - the old state
      * @param eventData - event data from a server sent event
      */
-  updateStreamStatus = (oldState, eventData) => {
+  addEvent = (oldState, eventData) => {
     return {
           ...oldState,
-          streamStatus: {
-            ...oldState.streamStatus,
+          events: {
+            ...oldState.events,
             [eventData.instanceName]: {
-                ...oldState.streamStatus[eventData.instanceName],
-                [eventData.source]: eventData.frameCount
+                ...oldState.events[eventData.instanceName],
+                [eventData.source]:
+                    typeof(oldState.events[eventData.instanceName]) === 'undefined'
+                        ?
+                        [eventData]
+                        :
+                        typeof(oldState.events[eventData.instanceName][eventData.source]) === 'undefined'
+                            ?
+                            [eventData]
+                            :
+                            oldState.events[eventData.instanceName][eventData.source].concat(eventData)
             }
           }
       };
@@ -48,13 +56,7 @@ class App extends Component {
 
   stream_callback = (serverEvent) => {
       const data = JSON.parse(serverEvent.data)
-      // TODO create state variables for each instance-source (e.g. as a nested object)
-      //  and store the events under each, then connect each to an event list component
-      console.log(data)
-      this.setState(oldState => ({
-        events: oldState.events.concat(data)
-      }));
-      this.setState(oldState => this.updateStreamStatus(oldState, data));
+      this.setState(oldState => this.addEvent(oldState, data));
   }
 }
 
