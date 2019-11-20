@@ -1,5 +1,6 @@
 // TODO - load this as a configuration value
-const STREAM_PATH = 'http://localhost:5000/stream'
+const STREAM_HOST = 'http://localhost:5000';
+const STREAM_PATH = `${STREAM_HOST}/stream`
 const DETECTION_EVENT = 'detection'
 
 function register_stream_callback(callback) {
