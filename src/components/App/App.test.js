@@ -10,19 +10,6 @@ describe("<App/> ", () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it ('setEventSource should return a new state object with event source', () => {
-    const oldState = {};
-    should.exist(oldState, 'oldState should be a valid object')
-    const eventSource = {};
-    should.exist(eventSource, 'eventSource should be a valid object\'')
-    const app = new App()
-    const newState = app.setEventSource(oldState, eventSource)
-    should.exist(newState)
-    newState.should.not.equal(oldState)
-    should.exist(newState.eventSource)
-    newState.eventSource.should.equal(eventSource)
-  });
-
   it ('updateStreamStatus when state does not contain stream status', () => {
       const app = new App();
       // streamStatus should be initialized to empty object
