@@ -22,23 +22,10 @@ class App extends Component {
   componentDidMount() {
       // https://www.w3schools.com/html/html5_serversentevents.asp
       if (typeof (EventSource) !== "undefined") {
-          const eventSource = register_stream_callback(this.stream_callback)
-          this.setState(oldState => this.setEventSource(oldState, eventSource))
+          register_stream_callback(this.stream_callback)
       } else {
           console.log("componentDidMount() - event source is not supported, therefore no callbacks registered")
       }
-  }
-
-    /**
-     * update the state with event source
-     * @param oldState - the old state
-     * @param eventSource - an instance of EventSource (standard API)
-     */
-  setEventSource = (oldState, eventSource) => {
-      return {
-          ...oldState,
-          eventSource
-      };
   }
 
     /**
