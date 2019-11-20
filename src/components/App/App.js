@@ -49,8 +49,7 @@ class App extends Component {
   stream_callback = (serverEvent) => {
       const data = JSON.parse(serverEvent.data)
       // TODO create state variables for each instance-source (e.g. as a nested object)
-      //  and store the frame count, then add them to the HTTP event source URL (will I need to deregister the earlier URI)
-      // might have to return the event listener and store a ref here?
+      //  and store the events under each, then connect each to an event list component
       console.log(data)
       this.setState(oldState => ({
         events: oldState.events.concat(data)
