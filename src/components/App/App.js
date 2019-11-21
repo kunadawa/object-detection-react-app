@@ -12,8 +12,9 @@ class App extends Component {
 
   render() {
     return (
+        // TODO - when routing is present, use it to choose what to render - events, history, settings
       <div className="App">
-        <EventList events={this.state.events}/>
+          {this.getEventLists(this.state.events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list}/>)}
       </div>
     );
   }
@@ -57,6 +58,13 @@ class App extends Component {
   stream_callback = (serverEvent) => {
       const data = JSON.parse(serverEvent.data)
       this.setState(oldState => this.addEvent(oldState, data));
+  }
+
+  getEventLists = (eventsState) => {
+      return Object.keys(eventsState).map(instanceName => {
+          // the map() will wrap the results in an array, 'unwrap' by asking for the sole array entry
+          return Object.keys(eventsState[instanceName]).map(source => eventsState[instanceName][source])[0];
+      });
   }
 }
 
