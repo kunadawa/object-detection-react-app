@@ -5,7 +5,6 @@ import {STREAM_HOST} from '../../api/stream-api'
 function EventList(props) {
     return (
         <div>
-            <h2>Events</h2>
                 {
                     props.events && props.events.length > 0
                         ?

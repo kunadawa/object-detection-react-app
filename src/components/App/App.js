@@ -14,6 +14,7 @@ class App extends Component {
     return (
         // TODO - when routing is present, use it to choose what to render - events, history, settings
       <div className="App">
+          <h2>Events</h2>
           {this.getEventLists(this.state.events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list}/>)}
       </div>
     );
