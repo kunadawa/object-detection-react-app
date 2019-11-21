@@ -1,16 +1,29 @@
 import React from 'react'
 
+import {STREAM_HOST} from '../../api/stream-api'
+
 function EventList(props) {
     return (
         <div>
-            <h3>Events ({props.events? props.events.length: 0})</h3>
-            {
-                props.events && props.events.length > 0
-                ? <ol>
-                        {props.events.map(event => <li key={event.stringMap.id}>{`${event.instanceName} - ${event.source} : ${JSON.stringify(event)}`}</li>)}
-                  </ol>
-                :  <span>No events available</span>
-            }
+            <h2>Events</h2>
+                {
+                    props.events && props.events.length > 0
+                        ?
+                        <div>
+                            <h3>{`${props.events[0].instanceName} - ${props.events[0].source}`}</h3>
+                            <span>
+                                {
+                                    `${(props.events.filter(event => !event.seen)).length}`
+                                }
+                            </span>
+                            <img
+                                src={`${STREAM_HOST}${props.events[props.events.length - 1].stringMap['frame_path']}`}
+                                alt='Frame'
+                            />
+                        </div>
+                        :
+                        <span>No events available</span>
+                }
         </div>
     )
 }

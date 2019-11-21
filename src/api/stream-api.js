@@ -9,4 +9,4 @@ function register_stream_callback(callback) {
     source.addEventListener(DETECTION_EVENT, callback)
 }
 
-export {register_stream_callback};
+export {register_stream_callback, STREAM_HOST};
