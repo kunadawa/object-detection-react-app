@@ -13,8 +13,8 @@ Enzyme.configure({adapter: new Adapter()});
 describe ("<EventList/>", () => {
     it("should render info msg when there are no events", () => {
         const list = shallow(<EventList />);
-        list.find('div span').should.have.length(1)
-        list.text().endsWith("No events available").should.be.true()
+        list.find('span').should.have.length(1)
+        list.find('span').text().should.equal("No events available")
     });
 
     const framePath = '/relative/path';
@@ -46,8 +46,8 @@ describe ("<EventList/>", () => {
         const source = "video1";
         const events = [event1, event2].map(event => ({...event, instanceName, source}))
         const list = shallow(<EventList events={events}/>);
-        list.exists(`div div img[src='${STREAM_HOST}${framePath2}']`).should.be.true()
-        list.find('div > div > h3').text().should.equal(`${instanceName} - ${source}`)
+        list.exists(`div img[src='${STREAM_HOST}${framePath2}']`).should.be.true()
+        list.find('div > h3').text().should.equal(`${instanceName} - ${source}`)
     })
 
     it("should show the number of unseen messages", () => {
@@ -56,6 +56,6 @@ describe ("<EventList/>", () => {
         const seen = true;
         const events = [event1, event2].map(event => ({...event, seen}))
         const list = shallow(<EventList events={[...events, event01]}/>);
-        list.find('div > div > span').text().should.equal('1')
+        list.find('div > span').text().should.equal('1')
     })
 })
