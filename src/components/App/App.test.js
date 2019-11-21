@@ -102,6 +102,23 @@ describe("<App/> ", () => {
        const eventLists = app.getEventLists(eventsState);
        should.exist((eventLists))
        eventLists.should.deepEqual([[initialData], [eventData]])
+    });
+
+   it ('getEventLists returns each unique source event list for a given instance', () => {
+        const app = new App();
+        const instanceName = 'test';
+        const source = 'https://streamX';
+        const initialData = {some:'initial-data'};
+
+        const newFrameCount = 51;
+        const newSource = "file://here/there";
+        // 'events' keys will be instance ids/names then have nested source:frame-count objects\
+        const eventData = {instanceName: instanceName, source:newSource, frameCount:newFrameCount}; // left out other data fields
+        const eventsState = {[instanceName]: {[source]: [initialData], [newSource]: [eventData]}};
+
+       const eventLists = app.getEventLists(eventsState);
+       should.exist((eventLists))
+       eventLists.should.deepEqual([[initialData], [eventData]])
   });
 
 })

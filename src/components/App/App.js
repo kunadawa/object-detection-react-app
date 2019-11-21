@@ -62,10 +62,11 @@ class App extends Component {
   }
 
   getEventLists = (eventsState) => {
-      return Object.keys(eventsState).map(instanceName => {
-          // the map() will wrap the results in an array, 'unwrap' by asking for the sole array entry
-          return Object.keys(eventsState[instanceName]).map(source => eventsState[instanceName][source])[0];
+      let lists = [];
+      Object.keys(eventsState).map(instanceName => {
+          return Object.keys(eventsState[instanceName]).map(source => lists = lists.concat([eventsState[instanceName][source]]))
       });
+      return lists;
   }
 }
 
