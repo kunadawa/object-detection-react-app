@@ -1,7 +1,5 @@
 import React from 'react'
 
-import {STREAM_HOST} from '../../api/stream-api'
-
 function EventList(props) {
     return (
         props.events && props.events.length > 0
@@ -14,7 +12,7 @@ function EventList(props) {
                     }
                 </span>
                 <img
-                    src={`${STREAM_HOST}${props.events[props.events.length - 1].stringMap['frame_path']}`}
+                    src={`${props.streamHost}${props.events[props.events.length - 1].stringMap['frame_path']}`}
                     alt='Frame'
                 />
             </div>

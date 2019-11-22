@@ -5,7 +5,6 @@ import Adapter from 'enzyme-adapter-react-16'
 import Enzyme from 'enzyme'
 import should from 'should'
 
-import {STREAM_HOST} from '../../api/stream-api'
 import EventList from './EventList'
 
 Enzyme.configure({adapter: new Adapter()});
@@ -44,9 +43,10 @@ describe ("<EventList/>", () => {
         // both events belong to same instance, source
         const instanceName = 'localhost';
         const source = "video1";
+        const streamHost = `http://${instanceName}`
         const events = [event1, event2].map(event => ({...event, instanceName, source}))
-        const list = shallow(<EventList events={events}/>);
-        list.exists(`div img[src='${STREAM_HOST}${framePath2}']`).should.be.true()
+        const list = shallow(<EventList events={events} streamHost={streamHost}/>);
+        list.exists(`div img[src='${streamHost}${framePath2}']`).should.be.true()
         list.find('div > h3').text().should.equal(`${instanceName} - ${source}`)
     })
 
