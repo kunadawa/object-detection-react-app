@@ -11,11 +11,45 @@ class App extends Component {
   }
 
   render() {
+      // TODO - when routing is present, use it to choose what to render - events, history, settings
+      const instanceName = 'instance 01 - the first instance';
+      const source01 = 'source 02 - the first source';
+      const source02 = 'source 02 - the second source';
+      const events = {
+            instanceName : {
+            [source01]: [
+                {
+                    instanceName: instanceName,
+                    source: source01,
+                    stringMap:{frame_path:'./sample-images/cow-boys.jpg'}
+                },
+                {
+                    instanceName: instanceName,
+                    stringMap:{frame_path:'./sample-images/cow-boys.jpg'}
+                }
+            ],
+           [source02]: [
+                {
+                    instanceName: instanceName,
+                    source: source02,
+                    stringMap:{frame_path:'./sample-images/foot-stuck.jpg'}
+                },
+                {
+                    instanceName: instanceName,
+                    stringMap:{frame_path:'./sample-images/foot-stuck.jpg'}
+                }
+            ]}
+        };
+      const streamHost = '';
+      // TODO provide real event data including offline image for testing boxes and labels
     return (
-        // TODO - when routing is present, use it to choose what to render - events, history, settings
       <div className="App">
-          <h2>Events</h2>
-          {this.getEventLists(this.state.events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list}/>)}
+          <div className='container'>
+              <h2>Events</h2>
+              {
+              this.getEventLists(events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list} streamHost={streamHost}/>)
+              }
+          </div>
       </div>
     );
   }
