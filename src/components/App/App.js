@@ -13,44 +13,45 @@ class App extends Component {
   render() {
       // TODO - when routing is present, use it to choose what to render - events, history, settings
       const instanceName = 'instance 01 - the first instance';
-      const source01 = 'source 02 - the first source';
-      const source02 = 'source 02 - the second source';
+      const sampleImages = ['./sample-images/cow-boys.jpg', './sample-images/foot-stuck.jpg'];
+      let sources = {};
+      [...Array(4).keys()].map(x => {
+          const source = `source ${x} - the ${x} source`;
+          sources = {
+          ...sources,
+          [source]:
+              [
+                  {
+                      instanceName: instanceName,
+                      source: source,
+                      stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
+                  },
+                  {
+                      instanceName: instanceName,
+                      source: source,
+                      stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
+                  }
+              ]
+          }
+          // returning this to keep the linter happy
+          return 0;
+      })
+
       const events = {
-            instanceName : {
-            [source01]: [
-                {
-                    instanceName: instanceName,
-                    source: source01,
-                    stringMap:{frame_path:'./sample-images/cow-boys.jpg'}
-                },
-                {
-                    instanceName: instanceName,
-                    stringMap:{frame_path:'./sample-images/cow-boys.jpg'}
-                }
-            ],
-           [source02]: [
-                {
-                    instanceName: instanceName,
-                    source: source02,
-                    stringMap:{frame_path:'./sample-images/foot-stuck.jpg'}
-                },
-                {
-                    instanceName: instanceName,
-                    stringMap:{frame_path:'./sample-images/foot-stuck.jpg'}
-                }
-            ]}
-        };
+            instanceName : {...sources}
+      };
       const streamHost = '';
       // TODO provide real event data including offline image for testing boxes and labels
     return (
-      <div className="App">
-          <div className='container'>
-              <h2>Events</h2>
+        // TODO events title to be part of nav bar
+        <div className="App container-fluid">
+          <h2>Events</h2>
+          <div className='row'>
               {
               this.getEventLists(events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list} streamHost={streamHost}/>)
               }
           </div>
-      </div>
+        </div>
     );
   }
 

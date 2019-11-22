@@ -4,13 +4,15 @@ function EventList(props) {
     return (
         props.events && props.events.length > 0
             ?
-            <div>
-                <h3>{`${props.events[0].instanceName} - ${props.events[0].source}`}</h3>
-                <span>
-                    {
-                        `${(props.events.filter(event => !event.seen)).length}`
-                    }
-                </span>
+            <div className='col-4'>
+                <div className='row'>
+                    <h5 className='col'>{`${props.events[0].instanceName} - ${props.events[0].source}`}</h5>
+                    <span className='col'>
+                        {
+                            `${(props.events.filter(event => !event.seen)).length}`
+                        }
+                    </span>
+                </div>
                 <img
                     src={`${props.streamHost}${props.events[props.events.length - 1].stringMap['frame_path']}`}
                     alt='Frame'
