@@ -2,9 +2,10 @@ import React from 'react'
 
 function EventList(props) {
     return (
+        // `col-${props.rowSize}`
         props.events && props.events.length > 0
             ?
-            <div className='col-4'>
+            <div className={`col-${12/props.rowSize}`}>
                 <div className='row'>
                     <h5 className='col'>{`${props.events[0].instanceName} - ${props.events[0].source}`}</h5>
                     <span className='col'>

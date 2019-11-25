@@ -7,6 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
         events:{},
+        eventsRowSize:3,
     }
   }
 
@@ -15,7 +16,7 @@ class App extends Component {
       const instanceName = 'instance 01 - the first instance';
       const sampleImages = ['./sample-images/cow-boys.jpg', './sample-images/foot-stuck.jpg'];
       let sources = {};
-      [...Array(4).keys()].map(x => {
+      [...Array(5).keys()].map(x => {
           const source = `source ${x} - the ${x} source`;
           sources = {
           ...sources,
@@ -46,11 +47,15 @@ class App extends Component {
         // TODO events title to be part of nav bar
         <div className="App container-fluid">
           <h2>Events</h2>
-          <div className='row'>
-              {
-              this.getEventLists(events).map(list => <EventList key={`${list[0].instanceName} - ${list[0].source}`} events={list} streamHost={streamHost}/>)
-              }
-          </div>
+            {
+                this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
+                    row => <div className='row no-gutters'>
+                      {
+                          row.map(eventList => <EventList key={`${eventList[0].instanceName} - ${eventList[0].source}`} events={eventList} streamHost={streamHost} rowSize = {this.state.eventsRowSize}/>)
+                      }
+                        </div>
+                  )
+            }
         </div>
     );
   }
@@ -102,6 +107,29 @@ class App extends Component {
           return Object.keys(eventsState[instanceName]).map(source => lists = lists.concat([eventsState[instanceName][source]]))
       });
       return lists;
+  }
+
+    /**
+     * split the given events into a list of arrays of at most size rowSize
+     * @param events -  a list of events
+     * @param rowSize - number of events
+     */
+  generateEventRows = (events, rowSize) => {
+    const rows = [];
+
+    for (let i = 0; i < events.length; i+=rowSize) {
+        const currentRow = [];
+        for (let j = 0; j < rowSize; j++) {
+            const index = i+j;
+            if (index < events.length) {
+                currentRow.push(events[index]);
+            } else {
+                continue;
+            }
+        }
+        rows.push(currentRow)
+    }
+    return rows;
   }
 }
 

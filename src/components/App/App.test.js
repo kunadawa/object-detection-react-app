@@ -121,5 +121,27 @@ describe("<App/> ", () => {
        eventLists.should.deepEqual([[initialData], [eventData]])
   });
 
+   it ('generateEventRows returns the expected value (array split into row size)', () => {
+       const numbers = [...Array(10).keys()]
+       const app = new App();
+       const rows = app.generateEventRows(numbers, 3);
+       console.log(rows)
+       should.exist(rows)
+       rows.should.be.length(4)
+       rows[0].should.deepEqual([0, 1, 2])
+       rows[3].should.deepEqual([9])
+   })
+
+    it ('generateEventRows returns the expected value (array split into row size) for nested arrays', () => {
+       const numbers = [[1,2,3], [4,5,6], [7,8,9],[10, 11],[12],[13,14,15,16], [17]]
+       const app = new App();
+       const rows = app.generateEventRows(numbers, 3);
+       console.log(rows)
+       should.exist(rows)
+       //rows.should.be.length(3)
+       rows[1].should.deepEqual([[10, 11],[12],[13,14,15,16]])
+       rows[2].should.deepEqual([[17]]);
+   })
+
 })
 
