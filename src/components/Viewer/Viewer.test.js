@@ -20,4 +20,11 @@ describe('<Viewer>', () => {
         const viewer = shallow(<Viewer events={events} streamHost={streamHost}/>);
         viewer.find('img').should.have.length(2);
     })
+
+    it ("uses instance name, source to create modal title", () => {
+        const events = eventsWithInstanceAndSource();
+        const viewer = shallow(<Viewer events={events} streamHost={streamHost}/>);
+        console.log(viewer.debug())
+        viewer.find('ModalTitle').text().should.equal(`${events[0].instanceName} / ${events[0].source}`);
+    })
 })
