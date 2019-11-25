@@ -47,7 +47,7 @@ describe ("<EventList/>", () => {
         const events = [event1, event2].map(event => ({...event, instanceName, source}))
         const list = shallow(<EventList events={events} streamHost={streamHost}/>);
         list.exists(`div img[src='${streamHost}${framePath2}']`).should.be.true()
-        list.find('div > h3').text().should.equal(`${instanceName} - ${source}`)
+        list.find('div > div > h5').text().should.equal(`${instanceName} - ${source}`)
     })
 
     it("should show the number of unseen messages", () => {
