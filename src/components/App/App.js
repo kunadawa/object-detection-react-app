@@ -50,7 +50,7 @@ class App extends Component {
           <h2>Events</h2>
             {
                 this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
-                    row => <div className='row'>
+                    row => <div className='row mt-2'>
                       {
                           row.map(eventList => <EventList
                               key={`${eventList[0].instanceName} - ${eventList[0].source}`}
