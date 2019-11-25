@@ -47,15 +47,26 @@ describe ("<EventList/>", () => {
         const events = [event1, event2].map(event => ({...event, instanceName, source}))
         const list = shallow(<EventList events={events} streamHost={streamHost}/>);
         list.exists(`div img[src='${streamHost}${framePath2}']`).should.be.true()
-        list.find('div > div > h5').text().should.equal(`${instanceName} - ${source}`)
+        list.find('div h5').text().should.not.be.empty(`${instanceName} - ${source}`)
     })
 
-    it("should show the number of unseen messages", () => {
+    it("should show the number of unseen messages with a 'danger' background", () => {
         const event01 = {seen:false, stringMap:{frame_path: 'framePath01'}};
         // mark these events as seen
         const seen = true;
         const events = [event1, event2].map(event => ({...event, seen}))
         const list = shallow(<EventList events={[...events, event01]}/>);
-        list.find('div > span').text().should.equal('1')
+        list.find('div span').text().should.equal('1')
+        list.find('div span').prop('className').startsWith('col bg-danger').should.be.true();
+    })
+
+    it("should show '0' for unseen messages if none found, with 'info' background", () => {
+        const event01 = {seen:true, stringMap:{frame_path: 'framePath01'}};
+        // mark these events as seen
+        const seen = true;
+        const events = [event1, event2].map(event => ({...event, seen}))
+        const list = shallow(<EventList events={[...events, event01]}/>);
+        list.find('div span').text().should.equal('0');
+        list.find('div span').prop('className').startsWith('col bg-info').should.be.true();
     })
 })

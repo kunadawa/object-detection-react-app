@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
         events:{},
         eventsRowSize:3,
-        eventHeaderMaxLen:20
+        eventHeaderMaxLen:30
     }
   }
 
