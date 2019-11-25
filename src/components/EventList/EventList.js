@@ -1,13 +1,15 @@
-import React from 'react'
+import React from 'react';
+const _ = require('lodash');
 
 function EventList(props) {
     return (
-        // `col-${props.rowSize}`
         props.events && props.events.length > 0
             ?
             <div className={`col-${12/props.rowSize}`}>
                 <div className='row'>
-                    <h5 className='col'>{`${props.events[0].instanceName} - ${props.events[0].source}`}</h5>
+                    <span className='col'>
+                        {`${_.truncate(props.events[0].instanceName, {length: props.eventHeaderMaxLen})} / ${_.truncate(props.events[0].source, {length: props.eventHeaderMaxLen})}`}
+                    </span>
                     <span className='col'>
                         {
                             `${(props.events.filter(event => !event.seen)).length}`

@@ -8,6 +8,7 @@ class App extends Component {
     this.state = {
         events:{},
         eventsRowSize:3,
+        eventHeaderMaxLen:20
     }
   }
 
@@ -49,9 +50,15 @@ class App extends Component {
           <h2>Events</h2>
             {
                 this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
-                    row => <div className='row no-gutters'>
+                    row => <div className='row'>
                       {
-                          row.map(eventList => <EventList key={`${eventList[0].instanceName} - ${eventList[0].source}`} events={eventList} streamHost={streamHost} rowSize = {this.state.eventsRowSize}/>)
+                          row.map(eventList => <EventList
+                              key={`${eventList[0].instanceName} - ${eventList[0].source}`}
+                              events={eventList}
+                              streamHost={streamHost}
+                              rowSize = {this.state.eventsRowSize}
+                              eventHeaderMaxLen = {this.state.eventHeaderMaxLen}
+                          />)
                       }
                         </div>
                   )
