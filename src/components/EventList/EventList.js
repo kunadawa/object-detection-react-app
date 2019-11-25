@@ -9,18 +9,21 @@ function EventList(props) {
     return (
         props.events && props.events.length > 0
             ?
-            <div className={`col-${12/props.rowSize}`}>
-                <h5 className='col bg-dark text-white'>
-                    {`${_.truncate(props.events[0].instanceName, {length: props.eventHeaderMaxLen})} / ${_.truncate(props.events[0].source, {length: props.eventHeaderMaxLen})}`}
-                </h5>
-                <span className={`col ${unseen > 0 ? 'bg-danger' : 'bg-info'} display-1`}>
-                    {
-                        `${unseen}`
-                    }
-                </span>
+            <div className={`col border`}>
+                <div className='row'>
+                    <span className='col bg-dark text-white display-6'>
+                        {`${_.truncate(props.events[0].instanceName, {length: props.eventHeaderMaxLen})} / ${_.truncate(props.events[0].source, {length: props.eventHeaderMaxLen})}`}
+                    </span>
+                    <span className={`col ${unseen > 0 ? 'bg-danger' : 'bg-info'} display-4`}>
+                        {
+                            `${unseen}`
+                        }
+                    </span>
+                </div>
                 <img
                     src={`${props.streamHost}${props.events[props.events.length - 1].stringMap['frame_path']}`}
                     alt='Frame'
+                    className='d-block mx-auto'
                 />
             </div>
             :
