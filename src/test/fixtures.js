@@ -28,4 +28,35 @@ const eventsWithInstanceAndSource = () => {
     return [event1, event2].map(event => ({...event, instanceName, source}))
 }
 
-export {framePath2, framePath, event1, event2, eventsWithInstanceAndSource, instanceName, source, streamHost};
+const generateEventsWithSampleImages = (number) => {
+    const instanceName = 'instance 01 - the first instance';
+    const sampleImages = ['./sample-images/cow-boys.jpg', './sample-images/foot-stuck.jpg'];
+    let sources = {};
+    [...Array(number).keys()].map(x => {
+      const source = `source ${x} - the ${x} source`;
+      sources = {
+      ...sources,
+      [source]:
+          [
+              {
+                  instanceName: instanceName,
+                  source: source,
+                  stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
+              },
+              {
+                  instanceName: instanceName,
+                  source: source,
+                  stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
+              }
+          ]
+      }
+      // returning this to keep the linter happy
+      return 0;
+    })
+
+    return  {
+        instanceName : {...sources}
+    };
+}
+
+export {framePath2, framePath, event1, event2, eventsWithInstanceAndSource, instanceName, source, streamHost, generateEventsWithSampleImages};

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {register_stream_callback} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
+import {generateEventsWithSampleImages} from '../../test/fixtures'
 
 class App extends Component {
   constructor(props) {
@@ -14,35 +15,8 @@ class App extends Component {
 
   render() {
       // TODO - when routing is present, use it to choose what to render - events, history, settings
-      const instanceName = 'instance 01 - the first instance';
-      const sampleImages = ['./sample-images/cow-boys.jpg', './sample-images/foot-stuck.jpg'];
-      let sources = {};
-      [...Array(5).keys()].map(x => {
-          const source = `source ${x} - the ${x} source`;
-          sources = {
-          ...sources,
-          [source]:
-              [
-                  {
-                      instanceName: instanceName,
-                      source: source,
-                      stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
-                  },
-                  {
-                      instanceName: instanceName,
-                      source: source,
-                      stringMap: {frame_path: sampleImages[Math.ceil(Math.random() * 2) - 1]}
-                  }
-              ]
-          }
-          // returning this to keep the linter happy
-          return 0;
-      })
-
-      const events = {
-            instanceName : {...sources}
-      };
       const streamHost = '';
+      const events = generateEventsWithSampleImages(3);
       // TODO provide real event data including offline image for testing boxes and labels
     return (
         // TODO events title to be part of nav bar
