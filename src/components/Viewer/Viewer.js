@@ -3,7 +3,7 @@ import {Carousel, Modal} from 'react-bootstrap'
 
 function Viewer(props) {
     return (
-        <Modal>
+        <Modal show={props.show} onHide={() => props.hide()}>
             <Modal.Header closeButton>
                 <Modal.Title>
                     {props.events ? `${props.events[0].instanceName} / ${props.events[0].source}` : ''}
@@ -15,7 +15,7 @@ function Viewer(props) {
                         props.events
                             ?
                             props.events.map(event => (
-                                <Carousel.Item>
+                                <Carousel.Item key={`${event.stringMap['frame_path']}`}>
                                     <img src={`${props.streamHost}${event.stringMap['frame_path']}`}/>
                                 </Carousel.Item>
                             ))

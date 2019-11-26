@@ -1,4 +1,5 @@
 import React from 'react';
+import './EventList.css';
 const _ = require('lodash');
 
 function EventList(props) {
@@ -9,7 +10,7 @@ function EventList(props) {
     return (
         props.events && props.events.length > 0
             ?
-            <div className={`col border`}>
+            <div className='col border event-list' onClick={() => props.viewEvents(props.events)}>
                 <div className='row'>
                     <span className='col bg-dark text-white display-6'>
                         {`${_.truncate(props.events[0].instanceName, {length: props.eventHeaderMaxLen})} / ${_.truncate(props.events[0].source, {length: props.eventHeaderMaxLen})}`}

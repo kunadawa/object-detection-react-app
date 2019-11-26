@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {register_stream_callback} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
 import {generateEventsWithSampleImages} from '../../test/fixtures'
+import Viewer from "../Viewer/Viewer";
 
 class App extends Component {
   constructor(props) {
@@ -21,22 +22,26 @@ class App extends Component {
     return (
         // TODO events title to be part of nav bar
         <div className="App container-fluid">
-          <h2>Events</h2>
-            {
-                this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
-                    row => <div className='row mt-2'>
-                      {
-                          row.map(eventList => <EventList
-                              key={`${eventList[0].instanceName} - ${eventList[0].source}`}
-                              events={eventList}
-                              streamHost={streamHost}
-                              rowSize = {this.state.eventsRowSize}
-                              eventHeaderMaxLen = {this.state.eventHeaderMaxLen}
-                          />)
-                      }
-                        </div>
-                  )
-            }
+            <h2>Events</h2>
+            <div>
+                {
+                    this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
+                        row => <div className='row mt-2' key={`${row[0][0].instanceName} - ${row[0][0].source}`}>
+                          {
+                              row.map(eventList => <EventList
+                                  key={`${eventList[0].instanceName} - ${eventList[0].source}`}
+                                  events={eventList}
+                                  streamHost={streamHost}
+                                  rowSize = {this.state.eventsRowSize}
+                                  eventHeaderMaxLen = {this.state.eventHeaderMaxLen}
+                                  viewEvents = {this.viewEvents}
+                              />)
+                          }
+                            </div>
+                      )
+                }
+            </div>
+            <Viewer show={this.state.showViewer} events={this.state.eventsToView} hide={this.hideViewer} streamHost={streamHost}/>
         </div>
     );
   }
@@ -111,6 +116,27 @@ class App extends Component {
         rows.push(currentRow)
     }
     return rows;
+  }
+
+    /**
+     * launch Viewer for the given events
+     * @param events
+     */
+  viewEvents = (events) => {
+      this.setState(oldState => (
+          {
+              ...oldState,
+              eventsToView:events,
+              showViewer:true
+          }
+      ))
+  }
+
+  hideViewer = () => {
+      this.setState(oldState => ({
+          ...oldState,
+          showViewer:false
+      }))
   }
 }
 
