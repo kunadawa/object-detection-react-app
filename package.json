@@ -41,5 +41,10 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "react-test-renderer": "^16.11.0",
     "should": "^13.2.3"
+  },
+  "jest":{
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }
