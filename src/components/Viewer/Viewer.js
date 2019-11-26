@@ -19,6 +19,7 @@ function Viewer(props) {
                                     <img
                                         src={`${props.streamHost}${event.stringMap['frame_path']}`}
                                         className='d-block mx-auto'
+                                        alt='Frame'
                                     />
                                 </Carousel.Item>
                             ))
