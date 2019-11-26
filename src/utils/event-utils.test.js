@@ -110,6 +110,18 @@ describe("event-utils ", () => {
         eventLists.should.deepEqual([[initialData], [eventData]])
     });
 
+    it('getEventLists returns each unique source event list for a one source, one instance', () => {
+        const instanceName = 'test';
+        const source = 'https://streamX';
+        const initialData = {some: 'initial-data'};
+
+        const eventsState = {[instanceName]: {[source]: [initialData]}};
+
+        const eventLists = getEventLists(eventsState);
+        should.exist((eventLists))
+        eventLists.should.deepEqual([[initialData]])
+    });
+
     it('generateEventRows returns the expected value (array split into row size)', () => {
         const numbers = [...Array(10).keys()]
         const rows = generateEventRows(numbers, 3);
@@ -118,6 +130,15 @@ describe("event-utils ", () => {
         rows[0].should.deepEqual([0, 1, 2])
         rows[3].should.deepEqual([9])
     })
+
+    it('generateEventRows returns the expected value (array split into row size) for array of one element', () => {
+        const numbers = [1649]
+        const rows = generateEventRows(numbers, 3);
+        should.exist(rows)
+        rows.should.be.length(1)
+        rows[0].should.deepEqual([1649])
+    })
+
 
     it('generateEventRows returns the expected value (array split into row size) for nested arrays', () => {
         const numbers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11], [12], [13, 14, 15, 16], [17]]
