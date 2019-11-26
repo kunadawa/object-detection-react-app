@@ -10,7 +10,7 @@ function Viewer(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Carousel>
+                <Carousel interval={false}>
                     {
                         props.events
                             ?
