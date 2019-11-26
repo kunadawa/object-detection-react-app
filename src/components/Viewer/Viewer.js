@@ -16,7 +16,10 @@ function Viewer(props) {
                             ?
                             props.events.map(event => (
                                 <Carousel.Item key={`${event.stringMap['frame_path']}`}>
-                                    <img src={`${props.streamHost}${event.stringMap['frame_path']}`}/>
+                                    <img
+                                        src={`${props.streamHost}${event.stringMap['frame_path']}`}
+                                        className='d-block mx-auto'
+                                    />
                                 </Carousel.Item>
                             ))
                             :
