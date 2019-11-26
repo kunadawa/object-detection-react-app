@@ -10,7 +10,7 @@ function Viewer(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Carousel interval={false}>
+                <Carousel interval={false} onSelect={index => props.events[index].seen = true}>
                     {
                         props.events
                             ?
