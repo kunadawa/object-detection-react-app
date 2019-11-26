@@ -3,6 +3,7 @@ import {register_stream_callback} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
 import {generateEventsWithSampleImages} from '../../test/fixtures'
 import Viewer from "../Viewer/Viewer";
+import {getEventLists, generateEventRows, addEvent} from "../../utils/event-utils";
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends Component {
             <h2>Events</h2>
             <div>
                 {
-                    this.generateEventRows(this.getEventLists(events), this.state.eventsRowSize).map (
+                    generateEventRows(getEventLists(events), this.state.eventsRowSize).map (
                         row => <div className='row mt-2' key={`${row[0][0].instanceName} - ${row[0][0].source}`}>
                           {
                               row.map(eventList => <EventList
@@ -55,67 +56,9 @@ class App extends Component {
       }
   }
 
-    /**
-     * add an event to  state, to a unique list for each instance-source combination
-     * @param oldState - the old state
-     * @param eventData - event data from a server sent event
-     */
-  addEvent = (oldState, eventData) => {
-    return {
-          ...oldState,
-          events: {
-            ...oldState.events,
-            [eventData.instanceName]: {
-                ...oldState.events[eventData.instanceName],
-                [eventData.source]:
-                    typeof(oldState.events[eventData.instanceName]) === 'undefined'
-                        ?
-                        [eventData]
-                        :
-                        typeof(oldState.events[eventData.instanceName][eventData.source]) === 'undefined'
-                            ?
-                            [eventData]
-                            :
-                            oldState.events[eventData.instanceName][eventData.source].concat(eventData)
-            }
-          }
-      };
-  }
-
   stream_callback = (serverEvent) => {
       const data = JSON.parse(serverEvent.data)
-      this.setState(oldState => this.addEvent(oldState, data));
-  }
-
-  getEventLists = (eventsState) => {
-      let lists = [];
-      Object.keys(eventsState).map(instanceName => {
-          return Object.keys(eventsState[instanceName]).map(source => lists = lists.concat([eventsState[instanceName][source]]))
-      });
-      return lists;
-  }
-
-    /**
-     * split the given events into a list of arrays of at most size rowSize
-     * @param events -  a list of events
-     * @param rowSize - number of events
-     */
-  generateEventRows = (events, rowSize) => {
-    const rows = [];
-
-    for (let i = 0; i < events.length; i+=rowSize) {
-        const currentRow = [];
-        for (let j = 0; j < rowSize; j++) {
-            const index = i+j;
-            if (index < events.length) {
-                currentRow.push(events[index]);
-            } else {
-                continue;
-            }
-        }
-        rows.push(currentRow)
-    }
-    return rows;
+      this.setState(oldState => addEvent(oldState, data));
   }
 
     /**
