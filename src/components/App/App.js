@@ -56,16 +56,20 @@ class App extends Component {
       }
   }
 
-  stream_callback = (serverEvent) => {
+    /**
+     * handle a server sent event
+     * @param serverEvent - the event
+     */
+    stream_callback = (serverEvent) => {
       const data = JSON.parse(serverEvent.data)
       this.setState(oldState => addEvent(oldState, data));
-  }
+    }
 
     /**
-     * launch Viewer for the given events
-     * @param events
-     */
-  viewEvents = (events) => {
+    * launch Viewer for the given events
+    * @param events
+    */
+    viewEvents = (events) => {
       this.setState(oldState => (
           {
               ...oldState,
@@ -73,14 +77,17 @@ class App extends Component {
               showViewer:true
           }
       ))
-  }
+    }
 
-  hideViewer = () => {
+    /**
+     * hide the event viewer
+     */
+    hideViewer = () => {
       this.setState(oldState => ({
           ...oldState,
           showViewer:false
       }))
-  }
+    }
 }
 
 export default App;
