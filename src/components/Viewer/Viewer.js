@@ -3,7 +3,7 @@ import {Carousel, Modal} from 'react-bootstrap'
 
 function Viewer(props) {
     return (
-        <Modal show={props.show} onHide={() => props.hide()}>
+        <Modal show={props.show} onHide={() => props.hide(props.events)}>
             <Modal.Header closeButton>
                 <Modal.Title>
                     {props.events ? `${props.events[0].instanceName} / ${props.events[0].source}` : ''}

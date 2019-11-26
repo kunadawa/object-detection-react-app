@@ -41,24 +41,45 @@ function generateEventRows(events, rowSize) {
  */
 function addEvent(oldState, eventData) {
     return {
-          ...oldState,
-          events: {
-            ...oldState.events,
-            [eventData.instanceName]: {
-                ...oldState.events[eventData.instanceName],
-                [eventData.source]:
-                    typeof(oldState.events[eventData.instanceName]) === 'undefined'
+      ...oldState,
+      events: {
+        ...oldState.events,
+        [eventData.instanceName]: {
+            ...oldState.events[eventData.instanceName],
+            [eventData.source]:
+                typeof(oldState.events[eventData.instanceName]) === 'undefined'
+                    ?
+                    [eventData]
+                    :
+                    typeof(oldState.events[eventData.instanceName][eventData.source]) === 'undefined'
                         ?
                         [eventData]
                         :
-                        typeof(oldState.events[eventData.instanceName][eventData.source]) === 'undefined'
-                            ?
-                            [eventData]
-                            :
-                            oldState.events[eventData.instanceName][eventData.source].concat(eventData)
-            }
-          }
-      };
-  }
+                        oldState.events[eventData.instanceName][eventData.source].concat(eventData)
+        }
+      }
+    };
+}
 
-  export {generateEventRows, addEvent, getEventLists};
+/**
+ * replace the list of events for the given instanceName and source with the provided one
+ * @param eventList the list to set
+ * @param instanceName e.g. localhost
+ * @param source e.g. 'gate camera'
+ * @oldState the state to be updated
+ * @returns a new state object based on oldState
+ */
+function setEventList(eventList, instanceName, source, oldState) {
+    return {
+        ...oldState,
+        events: {
+            ...oldState.events,
+            [instanceName]: {
+                ...oldState.events[instanceName],
+                [source]: eventList
+            }
+        }
+    }
+}
+
+export {generateEventRows, addEvent, getEventLists, setEventList};

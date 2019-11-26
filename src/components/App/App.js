@@ -3,7 +3,7 @@ import {register_stream_callback} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
 import {generateEventsWithSampleImages} from '../../test/fixtures'
 import Viewer from "../Viewer/Viewer";
-import {getEventLists, generateEventRows, addEvent} from "../../utils/event-utils";
+import {getEventLists, generateEventRows, addEvent, setEventList} from "../../utils/event-utils";
 
 class App extends Component {
   constructor(props) {
@@ -80,13 +80,13 @@ class App extends Component {
     }
 
     /**
-     * hide the event viewer
+     * hide the event viewer and update the events list in state
      */
-    hideViewer = () => {
-      this.setState(oldState => ({
-          ...oldState,
+    hideViewer = (eventList) => {
+        this.setState(oldState => ({
+          ...setEventList(eventList, eventList[0].instanceName, eventList[0].source, oldState),
           showViewer:false
-      }))
+        }));
     }
 }
 

@@ -1,5 +1,5 @@
 import should from "should";
-import {getEventLists, generateEventRows, addEvent} from "./event-utils";
+import {getEventLists, generateEventRows, addEvent, setEventList} from "./event-utils";
 
 describe("event-utils ", () => {
     it('addEvent when state does not contain any events', () => {
@@ -127,4 +127,42 @@ describe("event-utils ", () => {
         rows[1].should.deepEqual([[10, 11], [12], [13, 14, 15, 16]])
         rows[2].should.deepEqual([[17]]);
     })
+
+    it('setEventList replaces the correct list for a single instance and source', () => {
+        const instanceName = 'inst01';
+        const source = 'src01';
+        const oldState = {
+           events: {
+              [instanceName] : {
+                   [source]:[{a:'b'}, {c:'d'}],
+               }
+           }
+        }
+        const eventList =  [{i:'j'}, {k:'l'}];
+        const newState = setEventList(eventList, instanceName, source, oldState);
+        expect(newState).not.toBeUndefined();
+        newState.events[instanceName][source].should.deepEqual(eventList);
+        newState.events[instanceName].should.be.size(1);
+    });
+
+    it('setEventList replaces the correct list where multiple instances exists', () => {
+        const instanceName = 'inst02';
+        const source = 'src03';
+        const oldState = {
+           events: {
+              ['inst01'] : {
+                   ['src01']:[{a:'b'}, {c:'d'}],
+                   'src02':[{e:'f'}, {g:'h'}]
+               },
+               [instanceName]: {
+                  [source]:[{i:'j'}, {k:'l'}],
+                   'src04':[{m:'n'}, {o:'p'}]
+               }
+           }
+        }
+        const eventList =  [{q:'r'}, {s:'t'}];
+        const newState = setEventList(eventList, instanceName, source, oldState);
+        expect(newState).not.toBeUndefined();
+        newState.events[instanceName][source].should.deepEqual(eventList);
+    });
 })
