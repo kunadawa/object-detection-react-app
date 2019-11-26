@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        events:{},
+        events:generateEventsWithSampleImages(1),
         eventsRowSize:3,
         eventHeaderMaxLen:30
     }
@@ -18,7 +18,6 @@ class App extends Component {
   render() {
       // TODO - when routing is present, use it to choose what to render - events, history, settings
       const streamHost = '';
-      const events = generateEventsWithSampleImages(3);
       // TODO provide real event data including offline image for testing boxes and labels
     return (
         // TODO events title to be part of nav bar
@@ -26,7 +25,7 @@ class App extends Component {
             <h2>Events</h2>
             <div>
                 {
-                    generateEventRows(getEventLists(events), this.state.eventsRowSize).map (
+                    generateEventRows(getEventLists(this.state.events), this.state.eventsRowSize).map (
                         row => <div className='row mt-2' key={`${row[0][0].instanceName} - ${row[0][0].source}`}>
                           {
                               row.map(eventList => <EventList
