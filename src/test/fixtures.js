@@ -55,7 +55,7 @@ const generateEventsWithSampleImages = (number) => {
     })
 
     return  {
-        instanceName : {...sources}
+        [instanceName] : {...sources}
     };
 }
 
