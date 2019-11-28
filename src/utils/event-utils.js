@@ -101,4 +101,18 @@ function pixelDimsForBoundingBox(box, imageHeight, imageWidth) {
     }
 }
 
-export {generateEventRows, addEvent, getEventLists, setEventList, pixelDimsForBoundingBox};
+/**
+ * reshape a flattened array into the shape given
+ * @param flatArray - a flattened array
+ * @param shape - the original shape
+ */
+function reshapeDetectionBox(flatArray, shape) {
+    const result = [];
+    for (let i=0; i<shape[0]; i++) {
+        const start = i*shape[1];
+        result.push(flatArray.slice(start, start + shape[1]));
+    }
+    return result;
+}
+
+export {generateEventRows, addEvent, getEventLists, setEventList, pixelDimsForBoundingBox, reshapeDetectionBox};

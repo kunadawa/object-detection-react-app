@@ -1,5 +1,5 @@
 import should from "should";
-import {getEventLists, generateEventRows, addEvent, setEventList, pixelDimsForBoundingBox} from "./event-utils";
+import {getEventLists, generateEventRows, addEvent, setEventList, pixelDimsForBoundingBox, reshapeDetectionBox} from "./event-utils";
 
 describe("event-utils ", () => {
     it('addEvent when state does not contain any events', () => {
@@ -193,5 +193,13 @@ describe("event-utils ", () => {
         left.should.equal(40);
         width.should.equal(140);
         height.should.equal(40);
+    })
+
+    it ('reshapeDetectionBox() work as expected', () => {
+        const result = reshapeDetectionBox([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], [2, 5]);
+        should.exist(result);
+        result.should.be.length(2);
+        result[0].should.deepEqual([1, 2, 3, 4, 5]);
+        result[1].should.deepEqual([6, 7, 8, 9, 10]);
     })
 })
