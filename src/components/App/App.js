@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {register_stream_callback} from "../../api/stream-api";
+import {register_stream_callback, STREAM_HOST} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
-import {generateEventsWithSampleImages} from '../../test/fixtures'
 import Viewer from "../Viewer/Viewer";
 import {getEventLists, generateEventRows, addEvent, setEventList} from "../../utils/event-utils";
 
@@ -9,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        events:generateEventsWithSampleImages(1),
+        events:{},
         eventsRowSize:3,
         eventHeaderMaxLen:30
     }
@@ -17,7 +16,7 @@ class App extends Component {
 
   render() {
       // TODO - when routing is present, use it to choose what to render - events, history, settings
-      const streamHost = '';
+      const streamHost = STREAM_HOST;
       // TODO provide real event data including offline image for testing boxes and labels
     return (
         // TODO events title to be part of nav bar
