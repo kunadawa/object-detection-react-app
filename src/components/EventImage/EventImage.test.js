@@ -42,7 +42,7 @@ describe('<EventImage/>', () => {
         const box = eventImage.find('div > div[className="box"]');
         expect(box).not.toBeUndefined();
         box.should.be.length(1);
-        // TODO test for style: position absolute, top, left, width, height presence
+
         const style = box.prop('style');
         expect(style).not.toBeUndefined();
         style.position.should.equal('absolute');
