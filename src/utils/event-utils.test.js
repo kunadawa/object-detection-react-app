@@ -1,5 +1,5 @@
 import should from "should";
-import {getEventLists, generateEventRows, addEvent, setEventList} from "./event-utils";
+import {getEventLists, generateEventRows, addEvent, setEventList, pixelDimsForBoundingBox} from "./event-utils";
 
 describe("event-utils ", () => {
     it('addEvent when state does not contain any events', () => {
@@ -186,4 +186,12 @@ describe("event-utils ", () => {
         expect(newState).not.toBeUndefined();
         newState.events[instanceName][source].should.deepEqual(eventList);
     });
+
+    it ('pixelDimsForBoundingBox() gives the accurate pixel data', () => {
+        const {top, left, width, height} = pixelDimsForBoundingBox([0.1, 0.2, 0.5, 0.9], 100, 200);
+        top.should.equal(10);
+        left.should.equal(40);
+        width.should.equal(140);
+        height.should.equal(40);
+    })
 })

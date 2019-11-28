@@ -82,4 +82,23 @@ function setEventList(eventList, instanceName, source, oldState) {
     }
 }
 
-export {generateEventRows, addEvent, getEventLists, setEventList};
+/**
+ * @see https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/image/draw_bounding_boxes
+ * @see https://stackoverflow.com/a/48915493/315385
+ * @param box - tensorflow box in the form of an array [y_min, x_min, y_max, x_max]
+ * @param imageHeight - image height
+ * @param imageWidth - image width
+ * @return an object of the form {top:x, left:y, width:i, height: j}
+ */
+function pixelDimsForBoundingBox(box, imageHeight, imageWidth) {
+    // https://stackoverflow.com/a/3422486/315385
+    const [y_min, x_min, y_max, x_max] = box;
+    return {
+        top : y_min * imageHeight,
+        left: x_min * imageWidth,
+        width: (x_max - x_min) * imageWidth,
+        height: (y_max - y_min) * imageHeight,
+    }
+}
+
+export {generateEventRows, addEvent, getEventLists, setEventList, pixelDimsForBoundingBox};
