@@ -1,5 +1,6 @@
 import React from 'react';
 import './EventList.css';
+import EventImage from "../EventImage/EventImage";
 const _ = require('lodash');
 
 function EventList(props) {
@@ -21,11 +22,7 @@ function EventList(props) {
                         }
                     </span>
                 </div>
-                <img
-                    src={`${props.streamHost}${props.events[props.events.length - 1].stringMap['frame_path']}`}
-                    alt='Frame'
-                    className='d-block mx-auto'
-                />
+                <EventImage event={props.events[props.events.length - 1]}/>
             </div>
             :
             <span>No events available</span>

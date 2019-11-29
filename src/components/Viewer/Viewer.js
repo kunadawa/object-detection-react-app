@@ -1,5 +1,6 @@
 import React from "react";
 import {Carousel, Modal} from 'react-bootstrap'
+import EventImage from "../EventImage/EventImage";
 
 function Viewer(props) {
     return (
@@ -18,11 +19,7 @@ function Viewer(props) {
                             ?
                             props.events.map(event => (
                                 <Carousel.Item key={`${event.stringMap['frame_path']}`}>
-                                    <img
-                                        src={`${props.streamHost}${event.stringMap['frame_path']}`}
-                                        className='d-block mx-auto'
-                                        alt='Frame'
-                                    />
+                                    <EventImage event={event}/>
                                 </Carousel.Item>
                             ))
                             :

@@ -10,7 +10,7 @@ function EventImage(props) {
     //https://stackoverflow.com/a/25873123/315385
     Object.keys(event.categoryIndex).map(clazz => colors[clazz] = `hsla(${Math.random() * 360}, 100%, 50%, 1)`);
     return (
-        <div>
+        <div className='event-image'>
             <img 
                 width={event.floatMap['frame_height']} 
                 height={event.floatMap['frame_width']}
