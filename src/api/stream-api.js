@@ -1,6 +1,6 @@
 // TODO - load this as a configuration value
 const STREAM_HOST = 'http://localhost:5000';
-const STREAM_PATH = `${STREAM_HOST}/stream`
+const STREAM_PATH = `${getStreamURL()}/stream`
 const DETECTION_EVENT = 'detection'
 
 function register_stream_callback(callback) {
@@ -9,4 +9,9 @@ function register_stream_callback(callback) {
     source.addEventListener(DETECTION_EVENT, callback)
 }
 
-export {register_stream_callback, STREAM_HOST};
+function getStreamURL() {
+    const url = process.env.REACT_APP_STREAM_URL;
+    return url ? url : STREAM_HOST;
+}
+
+export {register_stream_callback, getStreamURL};

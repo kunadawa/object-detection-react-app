@@ -6,7 +6,7 @@ import {shallow} from "enzyme";
 
 import EventImage from "./EventImage";
 import {events as sampleEvents} from '../../test/sample-events'
-import {STREAM_HOST} from "../../api/stream-api";
+import {getStreamURL} from "../../api/stream-api";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -28,7 +28,7 @@ describe('<EventImage/>', () => {
         width.should.equal(400);
         const src = img.prop('src');
         expect(src).not.toBeUndefined();
-        src.should.equal(`${STREAM_HOST}/frames/91a68e3297ca7bcba592fd62f189f64119c0f2eab914bc1526131e37c5a4c1e7.jpg`)
+        src.should.equal(`${getStreamURL()}/frames/91a68e3297ca7bcba592fd62f189f64119c0f2eab914bc1526131e37c5a4c1e7.jpg`)
     });
 
     it('renders a bounding box as a div with a nested label span', () => {

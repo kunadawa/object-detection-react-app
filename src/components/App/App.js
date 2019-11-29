@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {register_stream_callback, STREAM_HOST} from "../../api/stream-api";
+import {register_stream_callback, getStreamURL} from "../../api/stream-api";
 import EventList from "../EventList/EventList";
 import Viewer from "../Viewer/Viewer";
 import {getEventLists, generateEventRows, addEvent, setEventList} from "../../utils/event-utils";
@@ -16,7 +16,7 @@ class App extends Component {
 
   render() {
       // TODO - when routing is present, use it to choose what to render - events, history, settings
-      const streamHost = STREAM_HOST;
+      const streamHost = getStreamURL();
       // TODO provide real event data including offline image for testing boxes and labels
     return (
         // TODO events title to be part of nav bar

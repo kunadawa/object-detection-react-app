@@ -1,5 +1,5 @@
 import React from "react";
-import {STREAM_HOST} from "../../api/stream-api";
+import {getStreamURL} from "../../api/stream-api";
 import {reshapeDetectionBox, pixelDimsForBoundingBox} from "../../utils/event-utils";
 import './EventImage.css';
 
@@ -11,10 +11,10 @@ function EventImage(props) {
     Object.keys(event.categoryIndex).map(clazz => colors[clazz] = `hsla(${Math.random() * 360}, 100%, 50%, 1)`);
     return (
         <div className='event-image'>
-            <img 
-                width={event.floatMap['frame_height']} 
+            <img
+                width={event.floatMap['frame_height']}
                 height={event.floatMap['frame_width']}
-                src={`${STREAM_HOST}${event.stringMap['frame_path']}`}
+                src={`${getStreamURL()}${event.stringMap['frame_path']}`}
                 alt={`${event.detectionClasses.map(clazz => event.categoryIndex[clazz])}`}
             />
             {reshapeDetectionBox(event.detectionBoxes.numbers, event.detectionBoxes.shape).map((box, index) => {
