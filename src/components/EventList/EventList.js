@@ -12,17 +12,15 @@ function EventList(props) {
         props.events && props.events.length > 0
             ?
             <div className='col border event-list' onClick={() => props.viewEvents(props.events)}>
-                <div className='row'>
-                    <span className='col bg-dark text-white display-6'>
+                <span className=' bg-dark text-white display-6' >
                         {`${_.truncate(props.events[0].instanceName, {length: props.eventHeaderMaxLen})} / ${_.truncate(props.events[0].source, {length: props.eventHeaderMaxLen})}`}
-                    </span>
-                    <span className={`col ${unseen > 0 ? 'bg-danger' : 'bg-info'} display-4`}>
-                        {
-                            `${unseen}`
-                        }
-                    </span>
-                </div>
+                </span>
                 <EventImage event={props.events[props.events.length - 1]}/>
+                <span className={`${unseen > 0 ? 'bg-danger' : 'bg-info'} display-6 unseen-count`}>
+                    {
+                        `${unseen}`
+                    }
+                </span>
             </div>
             :
             <span>No events available</span>
