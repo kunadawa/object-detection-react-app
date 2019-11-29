@@ -1,10 +1,10 @@
 .label {
-    background-color: aqua;
     font-size: x-small;
+    position: absolute;
+    vertical-align: bottom;
 }
 
 .box {
-    border: aqua;
     border-style: solid;
     border-width: thin;
 }

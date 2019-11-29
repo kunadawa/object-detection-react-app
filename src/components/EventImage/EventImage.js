@@ -5,6 +5,10 @@ import './EventImage.css';
 
 function EventImage(props) {
     const {event} = props;
+    // a map of category index key to random color
+    const colors = {};
+    //https://stackoverflow.com/a/25873123/315385
+    Object.keys(event.categoryIndex).map(clazz => colors[clazz] = `hsla(${Math.random() * 360}, 100%, 50%, 1)`);
     return (
         <div>
             <img 
@@ -14,14 +18,27 @@ function EventImage(props) {
                 alt={`${event.detectionClasses.map(clazz => event.categoryIndex[clazz])}`}
             />
             {reshapeDetectionBox(event.detectionBoxes.numbers, event.detectionBoxes.shape).map((box, index) => {
-                const position = pixelDimsForBoundingBox(box, event.floatMap['frame_height'], event.floatMap['frame_width'])
+                const position = pixelDimsForBoundingBox(box, event.floatMap['frame_height'], event.floatMap['frame_width']);
                 return (
                     <div
                         className='box'
                         key={box.join()}
-                        style={{position:'absolute', top:position.top, left:position.left, width:position.width, height:position.height}}>
+                        style={
+                            {
+                                position:'absolute',
+                                top:position.top,
+                                left:position.left,
+                                width:position.width,
+                                height:position.height,
+                                borderColor:colors[event.detectionClasses[index]]
+                            }
+                        }
+                    >
 
-                        <span className='label'>
+                        <span
+                            className='label'
+                            style={{backgroundColor:colors[event.detectionClasses[index]]}}
+                        >
                             {`${event.categoryIndex[event.detectionClasses[index]]} (${Math.round(event.detectionScores[index] * 100)}%)`}
                         </span>
                     </div>
