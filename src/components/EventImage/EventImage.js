@@ -10,6 +10,7 @@ function EventImage(props) {
                 width={event.floatMap['frame_height']} 
                 height={event.floatMap['frame_width']}
                 src={`${STREAM_HOST}${event.stringMap['frame_path']}`}
+                alt={`${event.detectionClasses.map(clazz => event.categoryIndex[clazz])}`}
             />
             {reshapeDetectionBox(event.detectionBoxes.numbers, event.detectionBoxes.shape).map((box, index) => {
                 const position = pixelDimsForBoundingBox(box, event.floatMap['frame_height'], event.floatMap['frame_width'])
