@@ -41,7 +41,7 @@ describe('<EventImage/>', () => {
         const eventImage = shallow(<EventImage event={sampleEvents[0]}/>);
         const box = eventImage.find('div > div[className="box"]');
         expect(box).not.toBeUndefined();
-        box.should.be.length(1);
+        expect(box).toHaveLength(1);
 
         const style = box.prop('style');
         expect(style).not.toBeUndefined();
@@ -50,5 +50,9 @@ describe('<EventImage/>', () => {
         style.left.should.equal(40);
         style.width.should.equal(140);
         style.height.should.equal(40);
+
+        const label = box.find('span[className="label"]');
+        expect(label).not.toBeUndefined();
+        label.text().should.equal('person (90%)')
     });
 })

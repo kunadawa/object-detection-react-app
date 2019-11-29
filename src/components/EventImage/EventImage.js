@@ -11,10 +11,7 @@ function EventImage(props) {
                 height={event.floatMap['frame_width']}
                 src={`${STREAM_HOST}${event.stringMap['frame_path']}`}
             />
-            {
-                //use bounds.join() as the key}
-            }
-            {reshapeDetectionBox(event.detectionBoxes.numbers, event.detectionBoxes.shape).map(box => {
+            {reshapeDetectionBox(event.detectionBoxes.numbers, event.detectionBoxes.shape).map((box, index) => {
                 const position = pixelDimsForBoundingBox(box, event.floatMap['frame_height'], event.floatMap['frame_width'])
                 return (
                     <div
@@ -22,7 +19,9 @@ function EventImage(props) {
                         key={box.join()}
                         style={{position:'absolute', top:position.top, left:position.left, width:position.width, height:position.height}}>
 
-                        <span className='label'></span>
+                        <span className='label'>
+                            {`${event.categoryIndex[event.detectionClasses[index]]} (${Math.round(event.detectionScores[index] * 100)}%)`}
+                        </span>
                     </div>
                 );
             })}
