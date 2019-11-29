@@ -1,7 +1,7 @@
 .label {
     font-size: x-small;
     position: absolute;
-    vertical-align: bottom;
+    top: -15px;
 }
 
 .box {
