@@ -1,0 +1,10 @@
+.label {
+    background-color: aqua;
+    font-size: x-small;
+}
+
+.box {
+    border: aqua;
+    border-style: solid;
+    border-width: thin;
+}

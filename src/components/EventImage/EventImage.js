@@ -1,6 +1,7 @@
 import React from "react";
 import {STREAM_HOST} from "../../api/stream-api";
 import {reshapeDetectionBox, pixelDimsForBoundingBox} from "../../utils/event-utils";
+import './EventImage.css';
 
 function EventImage(props) {
     const {event} = props;
