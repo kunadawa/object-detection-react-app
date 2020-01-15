@@ -2,11 +2,13 @@ import React, {Component} from 'react'
 
 class Video extends Component {
   state = {
-    videoUrl:''
+    videoUrl:'',
   }
 
   render() {
-    return <video src={this.state.videoUrl}/>
+    return <div>
+            <video src={this.state.videoUrl} autoPlay/>
+          </div>
   }
 
   componentDidMount = () => {
@@ -25,31 +27,41 @@ class Video extends Component {
     // https://developer.mozilla.org/en-US/docs/Web/API/ReadableStreamDefaultReader
     // https://developers.google.com/web/fundamentals/media/mse/basics
     // https://stackoverflow.com/questions/20042087/could-not-append-segments-by-media-source-api-get-invalidstateerror-an-attem
-    fetch ("http://localhost:50644").then(response => {
-      const mediaSource = event.target
-      const queue = []
+    const mediaSource = event.target
+    if (! mediaSource.sourceBuffers.length) {
       const videoSourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp9"')
-      videoSourceBuffer.addEventListener('updateend', (event) => {
-        if (queue.length) {
-          videoSourceBuffer.appendBuffer(queue.shift())
+      this.fetchVideo(videoSourceBuffer);
+    }
+    // videoSourceBuffer.addEventListener('updateend', (event) => {
+    //   const buffer = event.target;
+    //   this.fetchVideo(buffer);
+    // })
+  }
+
+  fetchVideo = (videoSourceBuffer) => {
+    fetch ("http://localhost:50644")
+      .then(response => {
+        const reader = response.body.getReader();
+        function push() {
+          return reader.read().then(({done, value}) => {
+            if (done) {
+              return;
+            }
+            //if (!videoSourceBuffer.updating) {
+              //if (this.state.videoError !== '') {
+                //console.log('video error: ', this.state.videoError)
+              //}
+              try {
+                videoSourceBuffer.appendBuffer(value)
+              } catch(error) {
+                console.error(error)
+              }
+            //}
+          }).then(push)
         }
-      })
-      const reader = response.body.getReader();
-      let firstAppend = true;
-      function push() {
-        return reader.read().then(({done, value}) => {
-          if (done) {
-            return;
-          }
-          if (firstAppend) {
-            videoSourceBuffer.appendBuffer(value)
-            firstAppend = false
-          } else {
-            queue.push(value)
-          }
-        }).then(push)
-      }
-      push();
+        push();
+    }).catch(error => {
+      console.error('fetch error', error)
     })
   }
 }
