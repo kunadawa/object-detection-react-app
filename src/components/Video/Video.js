@@ -1,14 +1,22 @@
 import React, {Component} from 'react'
 
 class Video extends Component {
-  state = {
-    videoUrl:'',
+  constructor(props) {
+    super(props)
+    this.state = {
+      videoUrl:'',
+    }
   }
+
 
   render() {
     return <div>
-            <video src={this.state.videoUrl} autoPlay/>
+            <video src={this.state.videoUrl} onError={(event)=> this.logError(event)}/>
           </div>
+  }
+
+  logError = (event) => {
+    console.error(event.target.error)
   }
 
   componentDidMount = () => {
