@@ -58,8 +58,9 @@ class App extends Component {
      * handle a server sent event
      * @param serverEvent - the event
      */
-    stream_callback = (serverEvent) => {
-      const data = JSON.parse(serverEvent.data)
+    // https://stackoverflow.com/a/42964310/315385
+    stream_callback = async (serverEvent) => {
+      const data = await JSON.parse(serverEvent.data)
       this.setState(oldState => addEvent(oldState, data));
     }
 
